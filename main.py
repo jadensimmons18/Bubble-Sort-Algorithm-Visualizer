@@ -65,7 +65,7 @@ class Main(tk.Tk):
         if not self.sorted: # Only run if the array is not already sorted
 
             if (self.curIndex == 0): # Only run at the start of the pass
-                self.swapped = False # assume its sorted until proved otherwise
+                self.swapped = False # Assume its sorted until proved otherwise
 
             if self.curIndex >= len(self.squares) - 1: # If you reach the end of the array
                 if self.swapped == False: # Array is sorted
@@ -102,14 +102,14 @@ class Main(tk.Tk):
 
     def animation(self, square1, square2, movement, total_distance):
 
-        coords = self.canvas.coords(self.square1.id)
+        coords = self.canvas.coords(square1.id)
         x1, y1, x2, y2 = coords
         square1_current_center = (x1 + x2) / 2
 
         if square1_current_center >= square2.center_x:
             return
 
-        coords = self.canvas.coords(self.square2.id)
+        coords = self.canvas.coords(square2.id)
         x1, y1, x2, y2 = coords
         square2_current_center = (x1 + x2) / 2
 
@@ -118,7 +118,7 @@ class Main(tk.Tk):
 
         self.canvas.move(square1.tag, movement, 0)
         self.canvas.move(square2.tag, -movement, 0)
-        self.canvas.after(100, self.animate, dx)
+        self.after(100, animation, total_distance)
 
 if __name__ == "__main__":
     app = Main()
