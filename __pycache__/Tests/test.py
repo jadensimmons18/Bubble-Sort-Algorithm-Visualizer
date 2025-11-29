@@ -107,20 +107,17 @@ class Main(tk.Tk):
                 return
 
     def animate_swap(self, square1, square2):
-        """
-        Animate square1 moving right and square2 moving left until they exchange places.
-        We assume each Square object has a numeric .center_x property representing its x-center.
-        Also each Square should have either .tag (string) or .id (canvas item id).
-        """
 
         # Determine which canvas identifier to move (tag preferred)
         def _canvas_key(sq):
+            # Try to return tag if it doesnt exist return id
             return getattr(sq, "tag", getattr(sq, "id", None))
 
         key1 = _canvas_key(square1)
         key2 = _canvas_key(square2)
-        if key1 is None or key2 is None:
-            raise RuntimeError("Square objects must have .tag or .id attributes for canvas movement.")
+        if key1 is None or key2 is None:  # No tag or id was found
+            raise RuntimeError(
+                "Square objects must have .tag or .id attributes for canvas movement.")
 
         # compute the horizontal distance to move (should be positive)
         distance = square2.center_x - square1.center_x
@@ -138,14 +135,13 @@ class Main(tk.Tk):
 
         # inner recursive animator using frames_left counter
         def _step(frames_left):
-            if frames_left <= 0:
-                # Finalize exact positions to avoid rounding error
-                # Move any residual remaining distance (snap to final)
-                # compute current centers from canvas coords to be precise
+            if frames_left <= 0:  # If your at the final frame in the animation
+                # Get their current coords
                 coords1 = self.canvas.coords(key1)
                 coords2 = self.canvas.coords(key2)
-                # coords returns [x1, y1, x2, y2] for rectangle/oval items
+                # coords returns [x1, y1, x2, y2]
                 if len(coords1) >= 4 and len(coords2) >= 4:
+                    # calculate their new center vals
                     c1 = (coords1[0] + coords1[2]) / 2
                     c2 = (coords2[0] + coords2[2]) / 2
                     # swap center_x values in the objects (they exchanged)
@@ -164,10 +160,14 @@ class Main(tk.Tk):
             self.canvas.move(key2, -dx_per_frame, 0)
 
             # schedule next frame
-            self.after(frame_delay, lambda: _step(frames_left - 1))
+            self.after(frame_delay, lambda: _step(frames_left - 1)) 
+            # lambda just makes it so the function doesnt run immediatley
+            # lambda is basically like a temporary helper function that can be called and has _step() inside of it
+            # we do this because after expects a function/method without any parenthesis
 
         # start the animation
         _step(frames)
+
 
 if __name__ == "__main__":
     app = Main()
