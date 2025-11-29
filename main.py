@@ -28,6 +28,7 @@ class Main(tk.Tk):
 
         # Variables
         self.sorted = False
+        self.swapped = False
 
     def start_pressed(self):
         self.start_button.place_forget()
@@ -46,11 +47,12 @@ class Main(tk.Tk):
             print(self.squares[i].val, end=" ")
             x1 += 80
             x2 += 80
-        print()
+        print() # Newline
 
     # Resets all variables and calls a single bubble sort pass
     def BubbleSort(self):
         self.curIndex = 0
+        self.sorted = False
         self.single_pass()
 
 
@@ -58,27 +60,30 @@ class Main(tk.Tk):
 
         for i in self.squares:
             print(i.val, end=" ")
-        print()
-
+        print() # NewLine
+    
         if not self.sorted: # Only run if the array is not already sorted
 
             if (self.curIndex == 0): # Only run at the start of the pass
-                self.sorted = True # assume its sorted until proved otherwise
+                self.swapped = False # assume its sorted until proved otherwise
 
             if self.curIndex >= len(self.squares) - 1: # If you reach the end of the array
-                if self.sorted == True: # Array is sorted
+                if self.swapped == False: # Array is sorted
                     print("Bubble Sort Complete")
+                    self.sorted = True
                     return
                 else: # Array is not sorted so call another pass
                     self.curIndex = 0
                     self.after(100, self.single_pass)
                     return
 
-            if self.squares[self.curIndex].val > self.squares[self.curIndex + 1].val:
-                self.sorted = False # Found something out of order
+            if self.squares[self.curIndex].val > self.squares[self.curIndex + 1].val: # if current square is bigger than next square
+                self.swapped = True # Found something out of order
                 tmp = self.squares[self.curIndex]
                 self.squares[self.curIndex] = self.squares[self.curIndex + 1]
                 self.squares[self.curIndex + 1] = tmp
+                self.curIndex += 1
+                self.animate_swap(self.squares[self.curIndex], self.squares[self.curIndex + 1]) #Call the animation on both squares
                 self.after(100, self.single_pass)
                 return
 
@@ -86,6 +91,34 @@ class Main(tk.Tk):
                 self.curIndex += 1
                 self.after(100, self.single_pass)
                 return
+
+    def animate_swap(self, square1, square2):
+
+        distance = square2.center_x - square1.center_x # = 80
+        frames = 10
+        movement_per_frame = distance / frames
+
+        self.animation(square1, square2, movement_per_frame, distance)
+
+    def animation(self, square1, square2, movement, total_distance):
+
+        coords = self.canvas.coords(self.square1.id)
+        x1, y1, x2, y2 = coords
+        square1_current_center = (x1 + x2) / 2
+
+        if square1_current_center >= square2.center_x:
+            return
+
+        coords = self.canvas.coords(self.square2.id)
+        x1, y1, x2, y2 = coords
+        square2_current_center = (x1 + x2) / 2
+
+        if square2_current_center <= square1.center_x:
+            return
+
+        self.canvas.move(square1.tag, movement, 0)
+        self.canvas.move(square2.tag, -movement, 0)
+        self.canvas.after(100, self.animate, dx)
 
 if __name__ == "__main__":
     app = Main()
