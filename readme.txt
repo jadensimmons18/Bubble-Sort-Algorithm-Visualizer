@@ -17,7 +17,7 @@ A dynamic Graphical User Interface (GUI) application built with **Python** and *
 
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/yourusername/sorting-visualizer.git](https://github.com/yourusername/sorting-visualizer.git)
+    git clone https://github.com/jadensimmons18/Bubble-Sort-Algorithm-Visualizer.git
     ```
 2.  Navigate to the project directory:
     ```bash
