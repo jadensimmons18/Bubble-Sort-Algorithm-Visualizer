@@ -2,16 +2,9 @@
 
 A dynamic Graphical User Interface (GUI) application built with **Python** and **Tkinter** that visualizes the execution of sorting algorithms. The current implementation features a fully animated **Bubble Sort**, demonstrating element comparison and swapping in real-time.
 
-![Python](https://img.shields.io/badge/Python-3.x-blue.svg)
-![Library](https://img.shields.io/badge/Library-Tkinter-orange.svg)
-![Status](https://img.shields.io/badge/Status-Active-green.svg)
-
 ## 📋 Table of Contents
 - [Features](#-features)
-- [Demo](#-demo)
-- [Getting Started](#-getting-started)
-- [Technical Implementation](#-technical-implementation)
-- [Project Structure](#-project-structure)
+- [Technical Implementation]
 
 ## ✨ Features
 
@@ -48,9 +41,3 @@ The sorting algorithm is implemented with a "pause-and-resume" architecture. Whe
 2.  The animation triggers.
 3.  Upon animation completion, the sorting function calls itself (`single_pass`) to resume exactly where it left off.
 
-```python
-# Snippet from main.py
-if a.val > b.val:
-    # Trigger Animation
-    self.animate_swap(obj1, obj2)
-    return # Pause execution while animation plays
