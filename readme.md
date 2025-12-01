@@ -4,7 +4,7 @@ A dynamic Graphical User Interface (GUI) application built with **Python** and *
 
 ## 📋 Table of Contents
 - [Features](#-features)
-- [Technical Implementation]
+- [Technical Implementation](#-technical-implementation)
 
 ## ✨ Features
 
